@@ -102,7 +102,7 @@ cd client/
 
 ## Submission
 
-Create a merge/pull request on Gitlab. Name the branch as {firstname}-{lastname}-submission.
+Create a pull request on Github. Name the branch as {firstname}-{lastname}-submission.
 
 ## Submission
 
