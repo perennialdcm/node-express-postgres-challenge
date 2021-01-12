@@ -1,4 +1,4 @@
-# Outgive Full Stack Developer Coding Challenge
+# Perennial | DCM Full Stack Developer Coding Challenge
 
 ## Technology Stack Used
 
@@ -103,3 +103,7 @@ cd client/
 ## Submission
 
 Create a merge/pull request on Gitlab. Name the branch as {firstname}-{lastname}-submission.
+
+## Submission
+
+Any issues you encounter with this challenge, please send an email to aron.tolentino@datacm.com
