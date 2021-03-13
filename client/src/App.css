@@ -171,3 +171,29 @@ span.MuiTypography-root.MuiListItemText-primary.MuiTypography-body2.MuiTypograph
   font-size: 5px !important;
   color: lightgray;
 }
+
+.todo_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo_item>h3{
+  font-weight: 200;
+}
+
+.todo__Details {
+  border-radius: 18px;
+  padding: 0.3rem;
+  margin: 0.7rem;
+  background-color: #063970;
+  color: white;
+  box-shadow: 5px 10px 8px #888888;
+  width: 50%;
+}
+
+.todo_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

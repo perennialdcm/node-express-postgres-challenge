@@ -14,8 +14,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Checkbox from '@material-ui/core/Checkbox';
 
 
-export default function ToDoItem({item,todos,setTodos,updateTodoTask,
-    onAddSubtask,onDeleteCall,onDeleteSubtaskCall,parentId}) {
+export default function ToDoItem({item,todos,updateTodoTask,handleTodoDetails,onDeleteCall}) {
 
     const [isEdit,setIsEdit] = useState(false);
     
@@ -81,7 +80,7 @@ export default function ToDoItem({item,todos,setTodos,updateTodoTask,
                     :
                     <div className={"todo__item"}>
                         <ListItem key={id} role={undefined} dense button>
-                            <div className="todo__text">
+                            <div className="todo__text" onClick={()=>handleTodoDetails(id)}>
                                 <ListItemText id={id} primary={title} />
                                 <ListItemText className="todo__textDetails" id={id} primary={details} />
                             </div>

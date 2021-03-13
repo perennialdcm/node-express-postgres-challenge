@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ToDoItem from './TodoItem';
 import Input from '@material-ui/core/Input';
+import {useHistory} from 'react-router-dom';
 import {config} from './config';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +19,7 @@ function TodoList() {
 
     const [todos, setTodos] = useState([])
     const [todoItem,setTodoItem] = useState({"title":'',"details":'',"completed":false})
-
+    const history = useHistory();
     const createUpdateTodo = async (itemObj) =>{
         const path = itemObj?.id ? `${config.todosUrl}/${itemObj?.id}`: config.todosUrl
         console.log(' path => ',path)
@@ -127,16 +128,21 @@ function TodoList() {
         }
     }
 
+    const handleTodoDetails = (id) =>{
+        history.push('/todos/'+id);
+    }
+
     const TodoListMemo = useMemo(()=> { 
         return <List className={classes.root} id="container">
                 {todos.map((item) => {
                     return (
-                        <div key={item.id} className="todo_task" >
+                        <div key={item.id} className="todo_task">
                             <ToDoItem
                                 item={item}
                                 key={item.id}
                                 onDeleteCall={onDeleteCall}
                                 todos= {todos}
+                                handleTodoDetails={handleTodoDetails}
                                 // setTodos={setTodos}
                                 updateTodoTask= {updateTodoTask}
                             />
