@@ -1,7 +1,7 @@
 function App() {
   return (
     <div className="App">
-      <h1>Todo App</h1>
+      <h1>Todo App Test</h1>
       <p>Display the list of to do tasks here with basic CRUD operations</p>
     </div>
   );
