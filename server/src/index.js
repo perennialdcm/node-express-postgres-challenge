@@ -19,16 +19,16 @@ app.use(bodyParser.json());
 const { Pool } = require('pg');
 // https://sqliteonline.com/#emlink=13.112.511.10;tasks;postgres
 const pgClient = new Pool({
-  // user: config.pgUser,
-  // host: config.pgHost,
-  // database: config.pgDatabase,
-  // password: config.pgPassword,
-  // port: config.pgPort,
-  user: 'postgres',
-  host: 'localhost',
-  database: 'tasks',
-  password: 'postgres',
-  port: 5432,
+  user: config.pgUser,
+  host: config.pgHost,
+  database: config.pgDatabase,
+  password: config.pgPassword,
+  port: config.pgPort,
+  // user: 'postgres',
+  // host: 'localhost',
+  // database: 'tasks',
+  // password: 'postgres',
+  // port: 5432,
 });
 pgClient.on('error', () => console.log('Lost Postgres connection'));
 
