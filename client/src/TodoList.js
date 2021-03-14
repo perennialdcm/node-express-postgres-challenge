@@ -1,10 +1,11 @@
-import React,{useState,useEffect,useMemo} from 'react';
+import React,{useState,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ToDoItem from './TodoItem';
 import Input from '@material-ui/core/Input';
 import {useHistory} from 'react-router-dom';
 import {config} from './config';
+import { fetchResource,deleteResource, createORUpdateResource } from './api';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,73 +17,25 @@ const useStyles = makeStyles((theme) => ({
 
 function TodoList() {
     const classes = useStyles();
-
     const [todos, setTodos] = useState([])
     const [todoItem,setTodoItem] = useState({"title":'',"details":'',"completed":false})
     const history = useHistory();
+
     const createUpdateTodo = async (itemObj) =>{
-        const path = itemObj?.id ? `${config.todosUrl}/${itemObj?.id}`: config.todosUrl
+        const path = itemObj?.id ? `${config.todosUrl}/${itemObj?.id}`: config.todosUrl;
+        const obj = itemObj?.id? itemObj : todoItem;
         console.log(' path => ',path)
-        const response = await fetch(path,{
-            method: itemObj?.id ? 'PUT' :'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-            'Content-Type': 'application/json',
-            // 'authorization': `Bearer ${localStorage.getItem('token')}`
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(itemObj?.id? itemObj : todoItem) 
-        })
-        const data = await response.json()
-        console.log('create todo res ',data)
+        createORUpdateResource(path,obj)
     }
 
     const deleteTodo = async (id) =>{
         const path = `${config.todosUrl}/${id}`;
-        const response = await fetch(path,{
-            method:'DELETE', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${localStorage.getItem('token')}`
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        })
-        const data = await response.json()
-        console.log('create todo res ',data)
-    }
-
+        deleteResource(path);
+    }   
 
     const fetchTodos = async () =>{
-        const response = await fetch(config.todosUrl,{
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json',
-                // 'authorization': `Bearer ${localStorage.getItem('token')}`
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        })
-        const res = await response.json()
-        const {data} = res;
-        console.log('updated data',data)
-        if(data?.length){
-            setTodos(data);
-        }else{
-            setTodos([])
-        }
+        const data = await fetchResource(config.todosUrl)
+        setTodos(data);
     }
 
     useEffect(()=>{
@@ -132,7 +85,7 @@ function TodoList() {
         history.push('/todos/'+id);
     }
 
-    const TodoListMemo = useMemo(()=> { 
+    const TodoListMemo = ()=> { 
         return <List className={classes.root} id="container">
                 {todos.map((item) => {
                     return (
@@ -150,7 +103,7 @@ function TodoList() {
                     );
                 })}
         </List>; 
-    }, [todos])
+    }
 
 
     return (
@@ -175,7 +128,7 @@ function TodoList() {
                     onChange={e=>setInTodos(e)}
                     onKeyDown={handleKeyDown}
                 />
-                {TodoListMemo}
+                {TodoListMemo()}
             </div>
         </div>
     )

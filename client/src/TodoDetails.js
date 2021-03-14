@@ -7,7 +7,7 @@ function TodoDetails() {
     const [todo,setTodo] = useState({"title":'',"details":'',"completed":false});
     let { id } = useParams();
 
-    const fetchTodoById = async () =>{
+    const fetchTodoById = async (id) =>{
         try{
             const data = await fetchResource(`${config.todosUrl}/${id}`)
             setTodo(data[0]);
@@ -17,8 +17,8 @@ function TodoDetails() {
         }
     }
     useEffect(() => {
-        fetchTodoById()
-    }, [])
+        fetchTodoById(id)
+    }, [id])
     return (
         <React.Fragment>
             <Link to="/">BACK</Link>

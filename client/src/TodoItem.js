@@ -17,9 +17,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 export default function ToDoItem({item,todos,updateTodoTask,handleTodoDetails,onDeleteCall}) {
 
     const [isEdit,setIsEdit] = useState(false);
-    
     const [editTodo,setEditTodo] = useState('');
-    const {title,details,completed,id} = item;
+    const {title,completed,id} = item;
     const [checked, setChecked] = React.useState(completed);
     
     const handleChange = (event) => {
@@ -40,7 +39,6 @@ export default function ToDoItem({item,todos,updateTodoTask,handleTodoDetails,on
         updateTodoTask(editTodo)
         setEditTodo('')
     };
-    
     
     const handleKeyDown = (event) =>{
         if(event.key === 'Enter'){
@@ -82,7 +80,6 @@ export default function ToDoItem({item,todos,updateTodoTask,handleTodoDetails,on
                         <ListItem key={id} role={undefined} dense button>
                             <div className="todo__text" onClick={()=>handleTodoDetails(id)}>
                                 <ListItemText id={id} primary={title} />
-                                <ListItemText className="todo__textDetails" id={id} primary={details} />
                             </div>
                             
                             <ListItemSecondaryAction>
